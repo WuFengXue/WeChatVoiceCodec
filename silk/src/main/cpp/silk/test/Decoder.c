@@ -107,6 +107,7 @@ static void print_usage(char* argv[]) {
     printf( "\n-Fs_API <Hz> : Sampling rate of output signal in Hz; default: 24000" );
     printf( "\n-loss <perc> : Simulated packet loss percentage (0-100); default: 0" );
     printf( "\n-quiet       : Print out just some basic values" );
+    printf( "\n-wechat      : Skip ASCII STX code of header (for wechat)" );
     printf( "\n" );
 }
 
@@ -130,7 +131,7 @@ int main( int argc, char* argv[] )
     SKP_int32 decSizeBytes;
     void      *psDec;
     SKP_float loss_prob;
-    SKP_int32 frames, lost, quiet;
+    SKP_int32 frames, lost, quiet, wechat = 0;
     SKP_SILK_SDK_DecControlStruct DecControl;
 
     if( argc < 3 ) {
@@ -158,6 +159,9 @@ int main( int argc, char* argv[] )
         } else if( SKP_STR_CASEINSENSITIVE_COMPARE( argv[ args ], "-quiet" ) == 0 ) {
             quiet = 1;
             args++;
+        } else if( SKP_STR_CASEINSENSITIVE_COMPARE( argv[ args ], "-wechat" ) == 0 ) {
+            wechat = 1;
+            args++;
         } else {
             printf( "Error: unrecognized setting: %s\n\n", argv[ args ] );
             print_usage( argv );
@@ -170,6 +174,7 @@ int main( int argc, char* argv[] )
         printf("********** Compiled for %d bit cpu *******************************\n", (int)sizeof(void*) * 8 );
         printf( "Input:                       %s\n", bitInFileName );
         printf( "Output:                      %s\n", speechOutFileName );
+        printf( "Wechat used:                  %d\n", wechat );
     }
 
     /* Open files */
@@ -181,6 +186,10 @@ int main( int argc, char* argv[] )
 
     /* Check Silk header */
     {
+        /* Skip ASCII STX code of header (for wechat) */
+        if (wechat) {
+            fseek(bitInFile, 1, 0);
+        }
         char header_buf[ 50 ];
         counter = fread( header_buf, sizeof( char ), strlen( "#!SILK_V3" ), bitInFile );
         header_buf[ strlen( "#!SILK_V3" ) ] = '\0'; /* Terminate with a null character */

@@ -107,6 +107,7 @@ static void print_usage( char* argv[] ) {
     printf( "\n-complexity <comp>   : Set complexity, 0: low, 1: medium, 2: high; default: 2" );
     printf( "\n-DTX <flag>          : Enable DTX (0/1); default: 0" );
     printf( "\n-quiet               : Print only some basic values" );
+    printf( "\n-wechat              : Add ASCII STX code 0x02 to header and remove 0xFFFF footer (for wechat)" );
     printf( "\n");
 }
 
@@ -140,7 +141,7 @@ int main( int argc, char* argv[] )
 #else
     SKP_int32 complexity_mode = 2;
 #endif
-    SKP_int32 DTX_enabled = 0, INBandFEC_enabled = 0, quiet = 0;
+    SKP_int32 DTX_enabled = 0, INBandFEC_enabled = 0, quiet = 0, wechat = 0;
     SKP_SILK_SDK_EncControlStruct encControl; // Struct for input to encoder
     SKP_SILK_SDK_EncControlStruct encStatus;  // Struct for status of encoder
 
@@ -183,6 +184,9 @@ int main( int argc, char* argv[] )
         } else if( SKP_STR_CASEINSENSITIVE_COMPARE( argv[ args ], "-quiet" ) == 0 ) {
             quiet = 1;
             args++;
+        } else if( SKP_STR_CASEINSENSITIVE_COMPARE( argv[ args ], "-wechat" ) == 0 ) {
+            wechat = 1;
+            args++;
         } else {
             printf( "Error: unrecognized setting: %s\n\n", argv[ args ] );
             print_usage( argv );
@@ -211,6 +215,7 @@ int main( int argc, char* argv[] )
         printf( "DTX used:                       %d\n",     DTX_enabled );
         printf( "Complexity:                     %d\n",     complexity_mode );
         printf( "Target bitrate:                 %d bps\n", targetRate_bps );
+        printf( "Wechat used:                    %d\n",     wechat );
     }
 
     /* Open files */
@@ -227,6 +232,10 @@ int main( int argc, char* argv[] )
 
     /* Add Silk header to stream */
     {
+        /* Add ASCII STX code 0x02 to header (for wechat) */
+        if (wechat) {
+            fputc(0x02, bitOutFile);
+        }
         static const char Silk_header[] = "#!SILK_V3";
         fwrite( Silk_header, sizeof( char ), strlen( Silk_header ), bitOutFile );
     }
@@ -333,11 +342,14 @@ int main( int argc, char* argv[] )
         }
     }
 
-    /* Write dummy because it can not end with 0 bytes */
-    nBytes = -1;
+    /* Wechat does not support */
+    if (!wechat) {
+        /* Write dummy because it can not end with 0 bytes */
+        nBytes = -1;
 
-    /* Write payload size */
-    fwrite( &nBytes, sizeof( SKP_int16 ), 1, bitOutFile );
+        /* Write payload size */
+        fwrite( &nBytes, sizeof( SKP_int16 ), 1, bitOutFile );
+    }
 
     /* Free Encoder */
     free( psEnc );
