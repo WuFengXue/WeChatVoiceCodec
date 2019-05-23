@@ -39,6 +39,16 @@ extern "C" {
 #endif
 
 
+/**
+ * Added by Reinhard in 20190523--start
+ */
+#ifndef HAVE_IEEE754_FLOAT32_T
+    typedef float ieee754_float32_t;
+#endif
+/**
+ * Added by Reinhard in 20190523--end
+ */
+
 /* GLOBAL VARIABLES used by parse.c and main.c.  
    instantiated in parce.c.  ugly, ugly */
 

@@ -37,6 +37,16 @@ extern  "C" {
 *
 ***********************************************************************/
 
+/**
+ * Added by Reinhard in 20190523--start
+ */
+#ifndef HAVE_IEEE754_FLOAT32_T
+    typedef float ieee754_float32_t;
+#endif
+/**
+ * Added by Reinhard in 20190523--end
+ */
+
 #ifndef FALSE
 #define         FALSE                   0
 #endif
