@@ -1,1 +1,1 @@
-include ':app', ':silk', ':lame'
+include ':app', ':silk', ':lame', ':libwcvcodec'
