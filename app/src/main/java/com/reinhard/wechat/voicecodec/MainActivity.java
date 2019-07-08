@@ -18,12 +18,6 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
     }
 
-    /**
-     * A native method that is implemented by the 'native-lib' native library,
-     * which is packaged with this application.
-     */
-    public native String stringFromJNI();
-
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
