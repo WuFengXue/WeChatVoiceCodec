@@ -49,8 +49,8 @@ public class MainActivity extends Activity {
     private void testPcmToAmr() {
         Log.d(TAG, "testPcmToAmr");
         String pcmPath = TEST_DIR + "in.pcm";
-        String mp3Path = TEST_DIR + "out.amr";
-        if (WcvCodec.encode(pcmPath, mp3Path) == 0) {
+        String amrPath = TEST_DIR + "out.amr";
+        if (WcvCodec.encode(pcmPath, amrPath) == 0) {
             Toast.makeText(this, "testPcmToAmr success", Toast.LENGTH_SHORT)
                     .show();
         }
@@ -58,10 +58,10 @@ public class MainActivity extends Activity {
 
     private void testMp3ToAmr() {
         Log.d(TAG, "testMp3ToAmr");
-        String amrPath = TEST_DIR + "in.mp3";
+        String mp3Path = TEST_DIR + "in.mp3";
         String pcmPath = TEST_DIR + "out.pcm";
-        String mp3Path = TEST_DIR + "out.amr";
-        if (WcvCodec.encode2(amrPath, pcmPath, mp3Path) == 0) {
+        String amrPath = TEST_DIR + "out.amr";
+        if (WcvCodec.encode2(mp3Path, pcmPath, amrPath) == 0) {
             Toast.makeText(this, "testMp3ToAmr success", Toast.LENGTH_SHORT)
                     .show();
         }
