@@ -4,6 +4,13 @@
 
 * 微信 amr 语音文件 <——silk——> pcm 文件 <——lame——> mp3 文件
 
+## 使用
+
+* gradle 依赖
+
+```gradle
+implementation 'com.reinhard:WeChatVoiceCodec:1.0.1'
+```
 
 ## 实现细节
 
