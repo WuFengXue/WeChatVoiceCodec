@@ -12,7 +12,7 @@ public class WcvCodec {
     }
 
     /**
-     * decode amr to mp3 (1. amr -> pcm  2. pcm -> mp3)
+     * decode amr to mp3 (1. amr to pcm  2. pcm to mp3)
      *
      * @param amrPath amr file path
      * @param pcmPath pcm file path
@@ -31,7 +31,7 @@ public class WcvCodec {
     public static native int encode(String pcmPath, String amrPath);
 
     /**
-     * encode mp3 to amr (1. mp3 -> pcm  2. pcm -> amr)
+     * encode mp3 to amr (1. mp3 to pcm  2. pcm to amr)
      *
      * @param mp3Path mp3 file path
      * @param pcmPath pcm file path
