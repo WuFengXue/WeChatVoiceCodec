@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.reinhard.wcvcodec.WcvCodec;
@@ -11,11 +12,32 @@ import com.reinhard.wcvcodec.WcvCodec;
 public class MainActivity extends Activity {
     private static final String TAG = "WcvCodec";
     private static final String TEST_DIR = "/sdcard/reinhard/";
+    private static final String[] ASSET_FILE_NAMES = {
+            "in.amr",
+            "in.mp3",
+            "in.pcm",
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initViews();
+        copyTestVectors();
+    }
+
+    private void initViews() {
+        TextView tvTip = findViewById(R.id.tv_tip);
+        String formatStr = getString(R.string.test_dir_format);
+        tvTip.setText(String.format(formatStr, TEST_DIR));
+    }
+
+    private void copyTestVectors() {
+        for (String assetFileName : ASSET_FILE_NAMES) {
+            FileUtils.copyAssetFile(this,
+                    assetFileName,
+                    TEST_DIR + assetFileName);
+        }
     }
 
     public void onClick(View view) {

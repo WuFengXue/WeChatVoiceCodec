@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">WeChatVoiceCodec</string>
+    <string name="amr_to_mp3">amr to mp3</string>
+    <string name="pcm_to_amr">pcm to amr</string>
+    <string name="mp3_to_amr">mp3 to amr</string>
+    <string name="test_dir_format">Test file and output file dir:\n\t%1$s</string>
 </resources>
