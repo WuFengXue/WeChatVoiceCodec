@@ -60,6 +60,14 @@ public class WcvCodec {
 
 ```
 
+## 测试
+
+* app 模块支持简单的编解码测试（自带测试音频）
+* 注意：app 运行后会自动将测试音频拷贝到 sd 卡，所以记得给 sd 卡读取权限
+* UI 效果如下
+
+![](docs/img/codec_test.gif)
+
 ## 二进制工具 / bin utils
 
 * 用 adb push 到安卓设备上使用
