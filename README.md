@@ -4,12 +4,22 @@
 
 * 微信 amr 语音文件 <——silk——> pcm 文件 <——lame——> mp3 文件
 
+## 修订历史
+
+| 版本  |    时间    |       修改内容       |             备注              |
+| :---: | :--------: | :------------------: | :---------------------------: |
+| 1.0.1 | 2020.04.29 |         首版         |         first version         |
+| 1.0.2 | 2020.06.09 | 子线程编解码闪退问题 | codec failed in worker thread |
+|       |            |                      |                               |
+
+
+
 ## 使用
 
 * gradle 依赖
 
 ```gradle
-implementation 'com.reinhard:WeChatVoiceCodec:1.0.1'
+implementation 'com.reinhard:WeChatVoiceCodec:1.0.2'
 ```
 
 * API
