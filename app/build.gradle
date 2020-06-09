@@ -31,7 +31,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     if (rootProject.ext.app_use_aar) {
-        implementation 'com.reinhard:WeChatVoiceCodec:1.0.1'
+        implementation 'com.reinhard:WeChatVoiceCodec:1.0.2'
     } else {
         implementation project(path: ':libwcvcodec')
     }
