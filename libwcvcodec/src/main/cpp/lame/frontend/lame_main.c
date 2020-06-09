@@ -534,7 +534,9 @@ lame_main(lame_t gf, int argc, char **argv)
     char    outPath[PATH_MAX + 1];
     char    nogapdir[PATH_MAX + 1];
     /* support for "nogap" encoding of up to 200 .wav files */
-#define MAX_NOGAP 200
+#ifndef MAX_NOGAP
+    #define MAX_NOGAP 200
+#endif
     int     nogapout = 0;
     int     max_nogap = MAX_NOGAP;
     char    nogap_inPath_[MAX_NOGAP][PATH_MAX + 1];
