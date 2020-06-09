@@ -59,33 +59,66 @@ public class MainActivity extends Activity {
 
     private void testAmrToMp3() {
         Log.d(TAG, "testAmrToMp3");
-        String amrPath = TEST_DIR + "in.amr";
-        String pcmPath = TEST_DIR + "out.pcm";
-        String mp3Path = TEST_DIR + "out.mp3";
-        if (WcvCodec.decode(amrPath, pcmPath, mp3Path) == 0) {
-            Toast.makeText(this, "testAmrToMp3 success", Toast.LENGTH_SHORT)
-                    .show();
-        }
+        final String amrPath = TEST_DIR + "in.amr";
+        final String pcmPath = TEST_DIR + "out.pcm";
+        final String mp3Path = TEST_DIR + "out.mp3";
+        // demo 展示用，实际项目中请不要这样使用线程
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (WcvCodec.decode(amrPath, pcmPath, mp3Path) == 0) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(MainActivity.this, "testAmrToMp3 success", Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 
     private void testPcmToAmr() {
         Log.d(TAG, "testPcmToAmr");
-        String pcmPath = TEST_DIR + "in.pcm";
-        String amrPath = TEST_DIR + "out.amr";
-        if (WcvCodec.encode(pcmPath, amrPath) == 0) {
-            Toast.makeText(this, "testPcmToAmr success", Toast.LENGTH_SHORT)
-                    .show();
-        }
+        final String pcmPath = TEST_DIR + "in.pcm";
+        final String amrPath = TEST_DIR + "out.amr";
+        // demo 展示用，实际项目中请不要这样使用线程
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (WcvCodec.encode(pcmPath, amrPath) == 0) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(MainActivity.this, "testPcmToAmr success", Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 
     private void testMp3ToAmr() {
         Log.d(TAG, "testMp3ToAmr");
-        String mp3Path = TEST_DIR + "in.mp3";
-        String pcmPath = TEST_DIR + "out.pcm";
-        String amrPath = TEST_DIR + "out.amr";
-        if (WcvCodec.encode2(mp3Path, pcmPath, amrPath) == 0) {
-            Toast.makeText(this, "testMp3ToAmr success", Toast.LENGTH_SHORT)
-                    .show();
-        }
+        final String mp3Path = TEST_DIR + "in.mp3";
+        final String pcmPath = TEST_DIR + "out.pcm";
+        final String amrPath = TEST_DIR + "out.amr";
+        // demo 展示用，实际项目中请不要这样使用线程
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (WcvCodec.encode2(mp3Path, pcmPath, amrPath) == 0) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(MainActivity.this, "testMp3ToAmr success", Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 }
