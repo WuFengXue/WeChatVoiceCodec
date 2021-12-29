@@ -14,6 +14,9 @@ public class MainActivity extends Activity {
     private static final String TEST_DIR = "/sdcard/reinhard/";
     private static final String[] ASSET_FILE_NAMES = {
             "in.amr",
+            "in2.amr",
+            "in3.amr",
+            "in4.amr",
             "in.mp3",
             "in.pcm",
     };
@@ -59,24 +62,26 @@ public class MainActivity extends Activity {
 
     private void testAmrToMp3() {
         Log.d(TAG, "testAmrToMp3");
-        final String amrPath = TEST_DIR + "in.amr";
-        final String pcmPath = TEST_DIR + "out.pcm";
-        final String mp3Path = TEST_DIR + "out.mp3";
-        // demo 展示用，实际项目中请不要这样使用线程
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (WcvCodec.decode(amrPath, pcmPath, mp3Path) == 0) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(MainActivity.this, "testAmrToMp3 success", Toast.LENGTH_SHORT)
-                                    .show();
-                        }
-                    });
+        for (int i = 2; i < 5; i++) {
+            final String amrPath = TEST_DIR + "in" + i + ".amr";
+            final String pcmPath = TEST_DIR + "out" + i + ".pcm";
+            final String mp3Path = TEST_DIR + "out" + i + ".mp3";
+            // demo 展示用，实际项目中请不要这样使用线程
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    if (WcvCodec.decode(amrPath, pcmPath, mp3Path) == 0) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(MainActivity.this, "testAmrToMp3 of " + amrPath + " success", Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+                        });
+                    }
                 }
-            }
-        }).start();
+            }).start();
+        }
     }
 
     private void testPcmToAmr() {
