@@ -1,5 +1,15 @@
 apply plugin: 'com.android.library'
 
+ext {
+    // 项目包名
+    PUBLISH_GROUP_ID = "io.github.WuFengXue"
+    // 项目名
+    PUBLISH_ARTIFACT_ID = 'WeChatVoiceCodec'
+    // 版本号
+    PUBLISH_VERSION = '1.0.2'
+}
+apply from: "${rootProject.projectDir}/publish-mavencentral.gradle"
+
 android {
     compileSdkVersion 28
 
