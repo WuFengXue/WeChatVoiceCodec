@@ -6,7 +6,7 @@ ext {
     // 项目名
     PUBLISH_ARTIFACT_ID = 'WeChatVoiceCodec'
     // 版本号
-    PUBLISH_VERSION = '1.0.2'
+    PUBLISH_VERSION = '1.0.3'
 }
 apply from: "${rootProject.projectDir}/publish-mavencentral.gradle"
 
@@ -17,8 +17,8 @@ android {
     defaultConfig {
         minSdkVersion 18
         targetSdkVersion 28
-        versionCode 2
-        versionName "1.0.2"
+        versionCode 3
+        versionName "1.0.3"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
