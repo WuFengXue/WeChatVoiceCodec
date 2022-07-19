@@ -10,16 +10,38 @@
 | :------------: | :---------: | :--------------------------------: | :------------------------------------: |
 |     1.0.1      | 2020.04.29  |                首版                |             first version              |
 |     1.0.2      | 2020.06.09  | 修复 lame 在子线程编解码时闪退问题 | fix lame codec failed in worker thread |
-|                |             |                                    |                                        |
+|     1.0.3      | 2022.07.19  |         切到 MavenCentral          |         switch to MavenCentral         |
 
 
 
 ## 使用
 
-* gradle 依赖
+* 项目的 build.gradle 添加 MavenCentral 仓库
 
 ```gradle
-implementation 'com.reinhard:WeChatVoiceCodec:1.0.2'
+buildscript {
+
+    repositories {
+        ……
+        mavenCentral()
+    }
+    ……
+}
+
+allprojects {
+    repositories {
+        ……
+        mavenCentral()
+    }
+}
+```
+
+
+
+* app 模块的 build.gradle 添加库依赖
+
+```gradle
+implementation 'io.github.WuFengXue:WeChatVoiceCodec:1.0.3'
 ```
 
 * API
