@@ -36,6 +36,8 @@ dependencies {
         implementation project(path: ':libwcvcodec')
     }
 
+    // 动态权限请求库 [googlesamples/easypermissions](https://github.com/googlesamples/easypermissions)
+    implementation 'pub.devrel:easypermissions:2.0.1'
     implementation 'com.android.support.constraint:constraint-layout:2.0.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

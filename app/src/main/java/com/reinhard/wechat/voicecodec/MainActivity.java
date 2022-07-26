@@ -1,7 +1,10 @@
 package com.reinhard.wechat.voicecodec;
 
+import android.Manifest;
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -9,21 +12,46 @@ import android.widget.Toast;
 
 import com.reinhard.wcvcodec.WcvCodec;
 
-public class MainActivity extends Activity {
+import java.io.File;
+import java.util.List;
+
+import pub.devrel.easypermissions.EasyPermissions;
+
+public class MainActivity extends Activity implements EasyPermissions.PermissionCallbacks {
     private static final String TAG = "WcvCodec";
-    private static final String TEST_DIR = "/sdcard/reinhard/";
+    /**
+     * 测试音频存储路径
+     */
+    private static final String TEST_DIR = Environment.getExternalStorageDirectory().getPath()
+            + File.separatorChar + "WcvCodec" + File.separatorChar;
+    /**
+     * 内置测试音频文件名
+     */
     private static final String[] ASSET_FILE_NAMES = {
             "in.amr",
             "in.mp3",
             "in.pcm",
     };
+    /**
+     * 权限请求码
+     */
+    private static final int REQUEST_CODE_EXT_STORAGE_PERMISSION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate: TEST_DIR = " + TEST_DIR);
         setContentView(R.layout.activity_main);
         initViews();
-        copyTestVectors();
+        if (checkExtStoragePermission()) {
+            copyTestVectors();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
     private void initViews() {
@@ -32,6 +60,9 @@ public class MainActivity extends Activity {
         tvTip.setText(String.format(formatStr, TEST_DIR));
     }
 
+    /**
+     * 拷贝内置测试音频到测试路径
+     */
     private void copyTestVectors() {
         for (String assetFileName : ASSET_FILE_NAMES) {
             FileUtils.copyAssetFile(this,
@@ -54,6 +85,25 @@ public class MainActivity extends Activity {
                 break;
             default:
                 break;
+        }
+    }
+
+    /**
+     * 校验及申请 sd 卡存储权限
+     *
+     * @return 已获取权限返回 true；否则申请权限并返回 false
+     */
+    private boolean checkExtStoragePermission() {
+        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (EasyPermissions.hasPermissions(this, perms)) {
+            return true;
+        } else {
+            EasyPermissions.requestPermissions(this,
+                    "内置的测试音频需要拷贝到 sd 卡，否则无法正常工作",
+                    REQUEST_CODE_EXT_STORAGE_PERMISSION,
+                    perms);
+            return false;
         }
     }
 
@@ -120,5 +170,17 @@ public class MainActivity extends Activity {
                 }
             }
         }).start();
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+        // sd 卡权限获取成功，拷贝内置测试音频到测试路径
+        copyTestVectors();
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        // sd 卡权限获取失败，打印提示日志
+        Log.e(TAG, "onPermissionsDenied");
     }
 }
